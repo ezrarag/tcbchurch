@@ -1,0 +1,97 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEditor() {
+      return isSignedIn() && request.auth.token.role in ['owner', 'editor'];
+    }
+
+    function isOwner() {
+      return isSignedIn() && request.auth.token.role == 'owner';
+    }
+
+    function isPublished() {
+      return resource.data.status == 'published';
+    }
+
+    // Site Settings (Public read; editor write except giving which is owner-only)
+    match /siteSettings/{docId} {
+      allow read: if true;
+      allow create, update: if isOwner() || (isEditor() && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['giving']));
+      allow delete: if isOwner();
+    }
+
+    // Public Content Collections: alerts, announcements, events, sermons, ministries, staff, pages, bulletins
+    match /alerts/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /announcements/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /events/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /sermons/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /ministries/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /staff/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /pages/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    match /bulletins/{docId} {
+      allow read: if isPublished() || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    // Submissions Collection (Public write-only with validation; Editors read/update)
+    match /submissions/{docId} {
+      allow read: if isEditor();
+      allow create: if request.resource.data.keys().hasAll(['type', 'name', 'message', 'createdAt', 'private', 'handled'])
+        && request.resource.data.keys().hasOnly(['type', 'name', 'email', 'phone', 'message', 'private', 'createdAt', 'handled'])
+        && request.resource.data.type in ['visit', 'contact', 'prayer']
+        && request.resource.data.name is string && request.resource.data.name.size() <= 100
+        && request.resource.data.message is string && request.resource.data.message.size() <= 2000
+        && request.resource.data.private is bool
+        && request.resource.data.handled == false;
+      allow update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    // Admins Collection (Owner-only)
+    match /admins/{uid} {
+      allow read, write: if isOwner();
+    }
+  }
+}
