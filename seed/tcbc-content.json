@@ -1,0 +1,59 @@
+{
+  "sermons": [
+    {
+      "id": "sermon-2023-01",
+      "status": "published",
+      "title": "Walking in Newness of Life",
+      "slug": "walking-in-newness-of-life",
+      "speaker": "Reverend Dr. Donna Childs",
+      "date": "2023-01-08",
+      "series": "New Beginnings",
+      "scripture": "Romans 6:4",
+      "videoUrl": "https://www.facebook.com/tcbchurchmke"
+    },
+    {
+      "id": "sermon-2023-04",
+      "status": "published",
+      "title": "The Power of the Resurrected Lord",
+      "slug": "power-of-resurrected-lord",
+      "speaker": "Reverend Dr. Donna Childs",
+      "date": "2023-04-09",
+      "series": "Resurrection Sunday",
+      "scripture": "Matthew 28:1-10",
+      "videoUrl": "https://www.facebook.com/tcbchurchmke"
+    },
+    {
+      "id": "sermon-2024-01",
+      "status": "published",
+      "title": "Stepping Into Your Divine Purpose",
+      "slug": "stepping-into-divine-purpose",
+      "speaker": "Reverend Dr. Donna Childs",
+      "date": "2024-01-07",
+      "series": "Empowered Living",
+      "scripture": "Jeremiah 29:11",
+      "videoUrl": "https://www.facebook.com/tcbchurchmke"
+    },
+    {
+      "id": "sermon-2025-01",
+      "status": "published",
+      "title": "100 Years of Grace and Faithfulness",
+      "slug": "100-years-of-grace",
+      "speaker": "Reverend Dr. Donna Childs",
+      "date": "2025-01-05",
+      "series": "Centennial Celebration",
+      "scripture": "Psalm 100:5",
+      "videoUrl": "https://www.facebook.com/tcbchurchmke"
+    },
+    {
+      "id": "sermon-latest",
+      "status": "published",
+      "title": "Empowering & Transforming Lives Through the Word",
+      "slug": "empowering-and-transforming-lives",
+      "speaker": "Reverend Dr. Donna Childs",
+      "date": "2026-09-13",
+      "series": "Faith & Transformation",
+      "scripture": "Matthew 4:23",
+      "videoUrl": "https://www.facebook.com/tcbchurchmke"
+    }
+  ]
+}

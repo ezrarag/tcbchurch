@@ -10,14 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         church: {
-          navy: "#0F172A", // Stately navy display background
-          "navy-light": "#1E293B",
+          maroon: "#7A1C30", // Primary Maroon / Burgundy logo color
+          "maroon-dark": "#581120",
+          "maroon-light": "#9B2C46",
+          navy: "#581120", // alias for backward compatibility
           gold: "#D97706", // Antique gold accents
           "gold-hover": "#B45309",
           cream: "#FAF8F5", // Warm cream page background
           surface: "#FFFFFF",
           text: "#1E293B",
-          muted: "#64748B",
+          muted: "#475569",
           border: "#E2E8F0",
         },
       },

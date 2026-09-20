@@ -23,7 +23,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
     font-weight: 700;
-    color: var(--color-navy);
+    color: var(--color-maroon-dark);
     line-height: 1.25;
   }
 
@@ -36,7 +36,7 @@
     position: absolute;
     top: -100px;
     left: 1rem;
-    background: var(--color-navy);
+    background: var(--color-maroon-dark);
     color: #FFFFFF;
     padding: 0.75rem 1.5rem;
     z-index: 9999;

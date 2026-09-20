@@ -18,13 +18,13 @@ export function ThisWeek({ events, announcements }: ThisWeekProps) {
             <span className="text-church-gold font-bold text-xs sm:text-sm uppercase tracking-wider block">
               Gatherings & Updates
             </span>
-            <h2 className="font-serif font-bold text-2xl sm:text-4xl text-church-navy">
+            <h2 className="font-serif font-bold text-2xl sm:text-4xl text-church-maroon">
               This Week at TCBC
             </h2>
           </div>
           <Link
             href="/events"
-            className="inline-flex items-center gap-1.5 font-bold text-church-navy hover:text-church-gold transition-colors text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-church-gold rounded p-1"
+            className="inline-flex items-center gap-1.5 font-bold text-church-maroon hover:text-church-gold transition-colors text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-church-gold rounded p-1"
           >
             <span>View All Events</span>
             <ArrowRight className="w-4 h-4" />
@@ -32,25 +32,25 @@ export function ThisWeek({ events, announcements }: ThisWeekProps) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Pinned Announcement Highlight Card */}
+          {/* Pinned Announcement Card */}
           {pinnedAnnouncement && (
-            <div className="lg:col-span-1 bg-church-navy text-white rounded-xl p-6 shadow-md border-l-4 border-church-gold flex flex-col justify-between">
+            <div className="lg:col-span-1 bg-church-maroon text-white rounded-xl p-6 shadow-md border-l-4 border-church-gold flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="inline-flex items-center gap-1 bg-church-gold/20 text-church-gold text-xs font-bold px-2.5 py-1 rounded">
                     <Pin className="w-3.5 h-3.5" />
                     <span>Pinned Announcement</span>
                   </span>
-                  <Bell className="w-4 h-4 text-slate-400" />
+                  <Bell className="w-4 h-4 text-rose-200" />
                 </div>
                 <h3 className="font-serif font-bold text-xl text-white">
                   {pinnedAnnouncement.title}
                 </h3>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm text-rose-100 leading-relaxed">
                   {pinnedAnnouncement.body}
                 </p>
               </div>
-              <div className="pt-4 border-t border-slate-700 mt-4">
+              <div className="pt-4 border-t border-rose-800/80 mt-4">
                 <Link
                   href="/announcements"
                   className="inline-flex items-center gap-2 text-xs font-bold text-church-gold hover:text-white transition-colors"
@@ -80,7 +80,7 @@ export function ThisWeek({ events, announcements }: ThisWeekProps) {
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{formattedDate}</span>
                     </div>
-                    <h4 className="font-serif font-bold text-lg text-church-navy leading-snug">
+                    <h4 className="font-serif font-bold text-lg text-church-maroon leading-snug">
                       {event.title}
                     </h4>
                     <p className="text-xs text-slate-600 line-clamp-3">

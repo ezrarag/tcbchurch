@@ -1,5 +1,7 @@
 import { adminDb } from "../lib/firebase/admin";
 import { siteConfig } from "../site.config";
+import fs from "fs";
+import path from "path";
 
 async function seedDatabase() {
   console.log("Seeding Firestore database for Tabernacle Community Baptist Church...");
@@ -10,6 +12,7 @@ async function seedDatabase() {
   await adminDb.collection("siteSettings").doc("main").set({
     name: siteConfig.name,
     tagline: siteConfig.tagline,
+    centennialTagline: siteConfig.centennialTagline,
     address: siteConfig.address,
     phone: siteConfig.phone,
     email: siteConfig.email,
@@ -18,7 +21,7 @@ async function seedDatabase() {
     livestreamUrl: siteConfig.socials.facebook || "",
     giving: siteConfig.giving,
     seo: {
-      metaTitle: siteConfig.name,
+      metaTitle: `${siteConfig.name} — Celebrating 100 Years`,
       metaDescription: siteConfig.tagline,
     },
     updatedAt: now,
@@ -27,10 +30,10 @@ async function seedDatabase() {
   console.log("  ✓ Seeded siteSettings/main");
 
   // 2. announcements
-  await adminDb.collection("announcements").doc("ann-1").set({
+  await adminDb.collection("announcements").doc("ann-centennial").set({
     status: "published",
-    title: "Welcome to Tabernacle Community Baptist Church",
-    body: "Join us this Sunday at 10:00 AM for Worship in-person or live on Facebook. Call-in prayer line is available daily at 7:00 AM. [CONFIRM]",
+    title: "Celebrating 100 Years of Faith & Service (1926–2026)",
+    body: "Tabernacle Community Baptist Church is celebrating 100 years! Join us for special centennial worship services, community outreach rallies, and homecoming celebrations.",
     pinned: true,
     publishAt: now,
     createdAt: now,
@@ -56,35 +59,39 @@ async function seedDatabase() {
   });
   console.log("  ✓ Seeded events");
 
-  // 4. sermons
-  await adminDb.collection("sermons").doc("sermon-1").set({
-    status: "published",
-    title: "Walking in Divine Purpose",
-    slug: "walking-in-divine-purpose",
-    speaker: `${siteConfig.pastorTitle} ${siteConfig.pastorName}`,
-    date: new Date().toISOString().split("T")[0],
-    series: "Empowered Living",
-    scripture: "Matthew 4:23",
-    videoUrl: siteConfig.socials.facebook || "https://www.facebook.com/tcbchurchmke",
-    createdAt: now,
-    updatedAt: now,
-    updatedBy: "seed-script",
-  });
-  console.log("  ✓ Seeded sermons");
+  // 4. Seed sermons from seed/tcbc-content.json if present
+  const contentPath = path.join(__dirname, "../seed/tcbc-content.json");
+  if (fs.existsSync(contentPath)) {
+    const rawData = fs.readFileSync(contentPath, "utf-8");
+    const json = JSON.parse(rawData);
+    if (Array.isArray(json.sermons)) {
+      for (const sermon of json.sermons) {
+        await adminDb.collection("sermons").doc(sermon.id).set({
+          ...sermon,
+          createdAt: now,
+          updatedAt: now,
+          updatedBy: "seed-script",
+        });
+      }
+      console.log(`  ✓ Seeded ${json.sermons.length} sermons from tcbc-content.json (archive back to Jan 2023)`);
+    }
+  }
 
-  // 5. ministries
-  await adminDb.collection("ministries").doc("min-1").set({
-    status: "published",
-    name: "Christian School & Early Education [CONFIRM]",
-    slug: "christian-school",
-    summary: "Nurturing faith, academic excellence, and character development in children.",
-    description: "TCBC Christian Academy provides quality Christ-centered education for pre-K through elementary students.",
-    order: 1,
-    createdAt: now,
-    updatedAt: now,
-    updatedBy: "seed-script",
-  });
-  console.log("  ✓ Seeded ministries");
+  // 5. Seed all verified ministries from site.config.ts
+  for (const min of siteConfig.ministries) {
+    await adminDb.collection("ministries").doc(min.slug).set({
+      status: "published",
+      name: min.name,
+      slug: min.slug,
+      summary: min.summary,
+      description: min.description,
+      order: min.order,
+      createdAt: now,
+      updatedAt: now,
+      updatedBy: "seed-script",
+    });
+  }
+  console.log(`  ✓ Seeded ${siteConfig.ministries.length} verified TCBC ministries`);
 
   console.log("✅ Database seeding finished cleanly!");
 }

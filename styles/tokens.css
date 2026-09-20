@@ -1,17 +1,15 @@
 :root {
-  /* Color Palette — Restrained Deep Navy, Antique Gold, Warm Cream */
-  --color-navy: #0F172A;
-  --color-navy-light: #1E293B;
+  /* Brand Color Palette — Dignified Maroon / Burgundy, Antique Gold, Warm Cream */
+  --color-maroon: #7A1C30;
+  --color-maroon-dark: #581120;
+  --color-maroon-light: #9B2C46;
   --color-gold: #D97706;
   --color-gold-hover: #B45309;
   --color-cream: #FAF8F5;
   --color-surface: #FFFFFF;
-  --color-text-main: #0F172A;
+  --color-text-main: #1E293B;
   --color-text-muted: #475569;
   --color-border: #E2E8F0;
-  --color-alert-warning-bg: #FEF3C7;
-  --color-alert-warning-border: #F59E0B;
-  --color-alert-warning-text: #78350F;
 
   /* Typography Scale — Base Body 18px+ for high legibility */
   --font-base-size: 1.125rem; /* 18px */

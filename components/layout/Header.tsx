@@ -3,17 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/site.config";
-import { Phone, Video, MapPin, Menu, X, Heart } from "lucide-react";
+import { Phone, Video, MapPin, Menu, X, Heart, Award } from "lucide-react";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-church-navy text-white sticky top-0 z-40 shadow-md">
-      {/* Top Announcement Bar */}
-      <div className="bg-church-navy-light text-xs sm:text-sm py-2 px-4 border-b border-slate-700/50">
+    <header className="w-full bg-church-maroon text-white sticky top-0 z-40 shadow-md">
+      {/* Top Announcement & Centennial Bar */}
+      <div className="bg-church-maroon-dark text-xs sm:text-sm py-2 px-4 border-b border-rose-900/60">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-4 flex-wrap">
+            <div className="inline-flex items-center gap-1 bg-church-gold/20 text-church-gold font-bold px-2 py-0.5 rounded text-[11px]">
+              <Award className="w-3 h-3 text-church-gold" />
+              <span>100 Years (1926–2026)</span>
+            </div>
             <a
               href={`tel:${siteConfig.phoneRaw}`}
               className="flex items-center gap-1.5 hover:text-church-gold transition-colors focus:outline-none focus:ring-2 focus:ring-church-gold rounded px-1 min-h-[30px]"
@@ -66,15 +70,15 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         {/* Brand Logo & Name */}
         <Link href="/" className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-church-gold rounded p-1">
-          <div className="w-10 h-10 rounded-full bg-church-gold flex items-center justify-center font-serif text-church-navy font-bold text-xl border-2 border-white/20 group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-full bg-white text-church-maroon flex items-center justify-center font-serif font-extrabold text-xl border-2 border-church-gold group-hover:scale-105 transition-transform shadow-md">
             TCBC
           </div>
           <div>
             <span className="block font-serif font-bold text-lg sm:text-xl text-white tracking-tight leading-tight group-hover:text-church-gold transition-colors">
               {siteConfig.name}
             </span>
-            <span className="block text-xs text-slate-300 font-sans tracking-wide">
-              {siteConfig.address.city}, {siteConfig.address.state}
+            <span className="block text-xs text-rose-200 font-sans tracking-wide">
+              {siteConfig.address.city}, {siteConfig.address.state} • Celebrating 100 Years
             </span>
           </div>
         </Link>
@@ -85,14 +89,14 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="px-3 py-2 text-sm font-medium text-slate-100 hover:text-church-gold hover:bg-slate-800/60 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-church-gold min-h-[44px] flex items-center"
+              className="px-3 py-2 text-sm font-medium text-rose-50 hover:text-church-gold hover:bg-rose-900/60 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-church-gold min-h-[44px] flex items-center"
             >
               {item.label}
             </Link>
           ))}
           <Link
             href="/plan-a-visit"
-            className="ml-2 px-4 py-2 text-sm font-bold text-church-navy bg-white hover:bg-slate-100 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-church-gold min-h-[44px] flex items-center"
+            className="ml-2 px-4 py-2 text-sm font-bold text-church-maroon bg-white hover:bg-rose-50 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-church-gold min-h-[44px] flex items-center"
           >
             Plan a Visit
           </Link>
@@ -102,7 +106,7 @@ export function Header() {
         <div className="lg:hidden flex items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 rounded-md text-slate-200 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-church-gold min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2.5 rounded-md text-rose-100 hover:text-white hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-church-gold min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -113,13 +117,13 @@ export function Header() {
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-church-navy border-t border-slate-700/80 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2">
+        <div className="lg:hidden bg-church-maroon-dark border-t border-rose-900/80 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2">
           {siteConfig.nav.map((item) => (
             <div key={item.href}>
               <Link
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2.5 text-base font-medium text-slate-100 hover:text-church-gold hover:bg-slate-800/80 rounded-md min-h-[44px]"
+                className="block px-3 py-2.5 text-base font-medium text-rose-100 hover:text-church-gold hover:bg-rose-900/80 rounded-md min-h-[44px]"
               >
                 {item.label}
               </Link>
@@ -130,7 +134,7 @@ export function Header() {
                       key={child.href}
                       href={child.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-sm text-slate-300 hover:text-white min-h-[40px] flex items-center"
+                      className="block px-3 py-2 text-sm text-rose-200 hover:text-white min-h-[40px] flex items-center"
                     >
                       {child.label}
                     </Link>
@@ -139,11 +143,11 @@ export function Header() {
               )}
             </div>
           ))}
-          <div className="pt-3 border-t border-slate-700 flex flex-col gap-2">
+          <div className="pt-3 border-t border-rose-800 flex flex-col gap-2">
             <Link
               href="/plan-a-visit"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center px-4 py-3 font-bold text-church-navy bg-white hover:bg-slate-100 rounded-md min-h-[44px] flex items-center justify-center"
+              className="w-full text-center px-4 py-3 font-bold text-church-maroon bg-white hover:bg-rose-50 rounded-md min-h-[44px] flex items-center justify-center"
             >
               Plan a Visit
             </Link>
