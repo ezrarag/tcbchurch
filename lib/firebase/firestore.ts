@@ -84,7 +84,7 @@ export async function getPublishedAnnouncements(limitCount = 5): Promise<Announc
       id: "sample-1",
       status: "published",
       title: "Welcome to Tabernacle Community Baptist Church",
-      body: "Join us this Sunday at 10:00 AM for Worship in-person or on Facebook Live. [CONFIRM]",
+      body: "Join us this Sunday at 10:00 AM for Worship in-person or on Facebook Live.", // TODO confirm
       pinned: true,
       publishAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
@@ -210,7 +210,7 @@ export async function getPublishedMinistries(): Promise<MinistryDoc[]> {
     {
       id: "min-1",
       status: "published",
-      name: "Christian School & Early Education [CONFIRM]",
+      name: "Christian School & Early Education", // TODO confirm
       slug: "christian-school",
       summary: "Nurturing faith, academic excellence, and character development in children.",
       description: "TCBC Christian Academy provides quality Christ-centered education for pre-K through elementary students.",
@@ -221,7 +221,7 @@ export async function getPublishedMinistries(): Promise<MinistryDoc[]> {
     {
       id: "min-2",
       status: "published",
-      name: "Mother's Day Out [CONFIRM]",
+      name: "Mother's Day Out", // TODO confirm
       slug: "mothers-day-out",
       summary: "Supportive early care and social development for young toddlers and infants.",
       description: "Providing parents with safe, loving childcare and early spiritual foundations.",
@@ -232,7 +232,7 @@ export async function getPublishedMinistries(): Promise<MinistryDoc[]> {
     {
       id: "min-3",
       status: "published",
-      name: "Biblical Counseling & Pastoral Care [CONFIRM]",
+      name: "Biblical Counseling & Pastoral Care", // TODO confirm
       slug: "counseling",
       summary: "Compassionate spiritual guidance, prayer, and emotional healing.",
       description: "Grounding personal restoration in the truth of God's Word and prayer.",

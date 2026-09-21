@@ -29,7 +29,7 @@ export default function AboutPage() {
             History & Heritage
           </h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Discover the legacy and story of Tabernacle Community Baptist Church serving Milwaukee. [CONFIRM]
+            Discover the legacy and story of Tabernacle Community Baptist Church serving Milwaukee.
           </p>
           <div className="flex items-center gap-1.5 font-bold text-xs text-church-navy group-hover:text-church-gold pt-2">
             <span>Read our history</span>

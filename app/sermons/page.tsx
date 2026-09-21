@@ -18,7 +18,7 @@ export default async function SermonsPage() {
 
   return (
     <div className="w-full bg-[#221c19] text-stone-100 min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-[1400px] mx-auto space-y-12">
+      <div className="max-w-[1440px] mx-auto space-y-12">
         
         {/* Header Breadcrumb & Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-800/80 pb-8">

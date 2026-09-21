@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Play, Facebook, Youtube } from "lucide-react";
+import { ArrowUpRight, Play, Facebook, Youtube, Award, Heart } from "lucide-react";
 import { StarLogo, StarWatermark } from "@/components/ui/StarLogo";
 import { FacebookVideoModal } from "@/components/sermons/FacebookVideoModal";
 import { FacebookSermonVideo } from "@/lib/facebook/types";
@@ -56,6 +56,10 @@ export function PinterestHero({ latestSermon, nextServiceInfo }: PinterestHeroPr
                 </span>
                 <span className="font-sans font-medium text-xs sm:text-sm text-white leading-tight">
                   Baptist Church
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full mt-1.5 w-fit">
+                  <Award className="w-3 h-3 text-amber-400" />
+                  <span>100 Years of Grace</span>
                 </span>
               </div>
             </Link>
@@ -143,9 +147,10 @@ export function PinterestHero({ latestSermon, nextServiceInfo }: PinterestHeroPr
                 </Link>
                 <Link
                   href="/give"
-                  className="text-stone-300 hover:text-white text-base sm:text-lg font-light tracking-wide transition-colors"
+                  className="text-amber-400 hover:text-amber-300 text-base sm:text-lg font-medium tracking-wide transition-colors flex items-center lg:justify-end gap-1.5"
                 >
-                  Give
+                  <Heart className="w-4 h-4 fill-current" />
+                  <span>Give</span>
                 </Link>
               </nav>
 

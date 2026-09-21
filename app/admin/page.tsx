@@ -310,7 +310,7 @@ export default function AdminDashboardPage() {
                 <span className="text-slate-500">2 hours ago</span>
               </div>
               <p className="text-slate-800 italic">&ldquo;Please pray for strength and healing for our family this week.&rdquo;</p>
-              <span className="block text-[11px] text-slate-500">From: Sister Mary [CONFIRM] • Phone: (414) 555-0199</span>
+              <span className="block text-[11px] text-slate-500">From: Sister Mary • Phone: (414) 555-0199</span>
             </div>
           </div>
         </div>

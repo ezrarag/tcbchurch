@@ -69,7 +69,7 @@ export const siteConfig: SiteConfig = {
   name: "Tabernacle Community Baptist Church",
   shortName: "TCBC",
   tagline: "Empowering and Transforming Lives Through the Word of God",
-  selfDescription: "a preaching, teaching, healing community of faith [CONFIRM]",
+  selfDescription: "a preaching, teaching, healing community of faith", // TODO confirm
   scriptureReference: "Matthew 4:23",
   pastorName: "Donna Childs",
   pastorTitle: "Reverend Dr.",
@@ -79,10 +79,10 @@ export const siteConfig: SiteConfig = {
     city: "Milwaukee",
     state: "WI",
     zip: "53206",
-    formatted: "2500 W Medford Ave, Milwaukee, WI 53206 [CONFIRM]",
+    formatted: "2500 W Medford Ave, Milwaukee, WI 53206", // TODO confirm
     mapUrl: "https://maps.google.com/?q=2500+W+Medford+Ave,+Milwaukee,+WI+53206",
   },
-  phone: "(414) 562-1129 [CONFIRM]",
+  phone: "(414) 562-1129", // TODO confirm
   phoneRaw: "4145621129",
   callInLine: "1-669-275-1164",
   callInLineRaw: "16692751164",
@@ -124,7 +124,7 @@ export const siteConfig: SiteConfig = {
       note: "Phone Line: 1-669-275-1164",
     },
     {
-      label: "Midweek Bible Study [CONFIRM]",
+      label: "Midweek Bible Study", // TODO confirm
       day: "Wednesday",
       time: "12:00 PM & 6:00 PM",
       note: "Midweek Refresh",

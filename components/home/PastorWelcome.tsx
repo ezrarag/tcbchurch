@@ -4,35 +4,53 @@ import { Quote, ArrowRight, Award } from "lucide-react";
 
 export function PastorWelcome() {
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8">
-        {/* Pastor Avatar Block */}
-        <div className="w-40 h-40 md:w-56 md:h-56 rounded-2xl bg-church-maroon text-church-gold flex flex-col items-center justify-center p-6 text-center shadow-lg border-4 border-church-gold flex-shrink-0">
-          <span className="font-serif font-bold text-3xl">TCBC</span>
-          <span className="text-xs text-rose-200 mt-2 font-sans">{siteConfig.pastorTitle}</span>
-          <span className="font-serif font-semibold text-white text-base leading-tight">{siteConfig.pastorName}</span>
-          <div className="mt-2 text-[10px] bg-church-gold text-white px-2 py-0.5 rounded font-bold flex items-center gap-1">
-            <Award className="w-3 h-3 text-white" />
-            100 Years
+    <section className="w-full bg-[#221c19] py-16 lg:py-24 px-4 sm:px-6 lg:px-12 text-stone-100">
+      <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-center">
+        {/* Left Column: Pastor Card */}
+        <div className="flex justify-center lg:justify-start">
+          <div className="w-full max-w-md rounded-2xl bg-[#581120] text-stone-100 p-8 sm:p-10 shadow-2xl border border-amber-500/30 flex flex-col items-center text-center space-y-4">
+            <div className="w-20 h-20 rounded-full bg-black/40 border-2 border-amber-400/60 flex items-center justify-center text-amber-300 font-serif font-bold text-2xl shadow-inner">
+              TCBC
+            </div>
+            <div className="space-y-1">
+              <span className="text-xs uppercase tracking-widest text-amber-300/80 font-sans block">
+                {siteConfig.pastorTitle}
+              </span>
+              <h3 className="font-serif font-bold text-2xl sm:text-3xl text-white">
+                {siteConfig.pastorName}
+              </h3>
+              <span className="text-xs text-stone-300 font-light block">
+                Senior Pastor & Teacher
+              </span>
+            </div>
+            <div className="pt-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full shadow-sm">
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                <span>Celebrating 100 Years</span>
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Welcome Text */}
-        <div className="space-y-4 text-slate-800 text-left flex-1">
-          <div className="flex items-center gap-2 text-church-gold font-semibold text-sm uppercase tracking-wider">
-            <Quote className="w-5 h-5 text-church-gold fill-current" />
+        {/* Right Column: Welcome Text */}
+        <div className="space-y-6 text-left max-w-[65ch]">
+          <div className="inline-flex items-center gap-2 text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-widest">
+            <Quote className="w-4 h-4 text-amber-400 fill-current" />
             <span>Welcome Message from Our Pastor</span>
           </div>
-          <h2 className="font-serif font-bold text-2xl sm:text-3xl text-church-maroon leading-tight">
+
+          <h2 className="font-serif font-light text-3xl sm:text-4xl lg:text-5xl text-amber-50 leading-[1.15]">
             Greetings in the Name of Our Lord Jesus Christ
           </h2>
-          <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+
+          <p className="text-base sm:text-lg text-stone-300 font-light leading-relaxed">
             Welcome to Tabernacle Community Baptist Church. Celebrating 100 years of God&apos;s grace and ministry in Milwaukee, we are a preaching, teaching, and healing community of faith dedicated to empowering and transforming lives through God&apos;s holy Word. Whether you are seeking a church home, prayer support, or searching for answers about faith, you are welcome here.
           </p>
+
           <div className="pt-2">
             <Link
               href="/about/leadership"
-              className="inline-flex items-center gap-2 font-bold text-church-maroon hover:text-church-gold transition-colors text-base group focus:outline-none focus:ring-2 focus:ring-church-gold rounded p-1"
+              className="inline-flex items-center gap-2 font-medium text-amber-400 hover:text-amber-300 transition-colors text-base group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded p-1"
             >
               <span>Learn more about Pastoral Leadership & Clergy</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

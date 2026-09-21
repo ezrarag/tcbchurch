@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/site.config";
 import "@/app/globals.css";
-import { Header } from "@/components/layout/Header";
+import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
 import { DevModeGate } from "@/components/dev-mode/DevModeGate";
 import { Suspense } from "react";
@@ -63,8 +63,8 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        {/* Global Header */}
-        <Header />
+        {/* Global Navigation (Subpages + Minimal Mobile Drawer) */}
+        <Navigation />
 
         {/* Main Page Body */}
         <main id="main-content" className="flex-grow">

@@ -18,8 +18,8 @@ export function AlertBanner({ alert }: AlertBannerProps) {
   const Icon = alert.severity === "urgent" ? BellOff : alert.severity === "warning" ? AlertTriangle : Info;
 
   return (
-    <div className={`w-full py-3 px-4 border-b ${bgStyle}`} role="region" aria-label="Church Announcement Alert">
-      <div className="max-w-7xl mx-auto flex items-center gap-3">
+    <div className={`w-full py-3.5 px-4 sm:px-6 lg:px-12 border-b ${bgStyle}`} role="region" aria-label="Church Announcement Alert">
+      <div className="max-w-[1440px] mx-auto flex items-center gap-3">
         <Icon className="w-5 h-5 flex-shrink-0" />
         <p className="text-sm font-medium leading-normal">{alert.message}</p>
       </div>

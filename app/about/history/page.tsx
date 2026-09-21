@@ -21,7 +21,7 @@ export default function HistoryPage() {
         <div className="bg-amber-50 border-l-4 border-church-gold p-4 text-xs font-semibold text-amber-900 rounded space-y-1">
           <span className="font-bold block">Centennial Milestone (100th Anniversary):</span>
           <p>
-            Tabernacle Community Baptist Church is celebrating 100 years of ministry in Milwaukee, Wisconsin. Specific founding charter documents and historical anniversary timelines are preserved in our church archives and marked [CONFIRM] for exact dates.
+            Tabernacle Community Baptist Church is celebrating 100 years of ministry in Milwaukee, Wisconsin. Specific founding charter documents and historical anniversary timelines are preserved in our church archives. {/* TODO confirm exact charter dates */}
           </p>
         </div>
 

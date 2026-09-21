@@ -21,7 +21,7 @@ export default async function HomePage() {
   const latestSermon = sermons[0];
 
   return (
-    <div className="bg-[#221c19] text-stone-100 flex flex-col">
+    <div className="bg-[#221c19] text-stone-100 flex flex-col w-full overflow-x-hidden">
       {/* 1) Alert banner (if emergency alert active) */}
       <AlertBanner alert={alert} />
 
@@ -31,29 +31,25 @@ export default async function HomePage() {
         nextServiceInfo={nextServiceInfo}
       />
 
-      {/* 3) Facebook Synced Services & Events Feed */}
-      <section className="w-full py-12 px-4 sm:px-6 lg:px-12 max-w-[1440px] mx-auto">
-        <FacebookEventsFeed
-          events={events}
-          title="Upcoming Services & Facebook Events"
-          subtitle="Real-time notifications, service times, and community gatherings directly from our church."
-        />
+      {/* 3) Facebook Synced Services & Events Feed (Full-bleed band on #181311) */}
+      <section className="w-full bg-[#181311] py-16 lg:py-24 px-4 sm:px-6 lg:px-12 text-stone-100">
+        <div className="max-w-[1440px] mx-auto">
+          <FacebookEventsFeed
+            events={events}
+            title="Upcoming Services & Facebook Events"
+            subtitle="Real-time notifications, service times, and community gatherings directly from our church."
+          />
+        </div>
       </section>
 
-      {/* 4) Pastor Welcome */}
-      <div className="bg-[#181311] border-y border-stone-800 text-stone-200">
-        <PastorWelcome />
-      </div>
+      {/* 4) Pastor Welcome (Full-bleed band on #221c19) */}
+      <PastorWelcome />
 
-      {/* 5) Ministries Grid */}
-      <div className="bg-[#221c19] text-stone-100">
-        <MinistriesGrid ministries={ministries} />
-      </div>
+      {/* 5) Ministries Grid (Full-bleed band on #181311) */}
+      <MinistriesGrid ministries={ministries} />
 
-      {/* 6) Give CTA */}
-      <div className="bg-[#181311] border-t border-stone-800">
-        <GiveCTA />
-      </div>
+      {/* 6) Give CTA (Full-bleed band on #221c19) */}
+      <GiveCTA />
     </div>
   );
 }

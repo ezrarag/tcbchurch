@@ -40,9 +40,7 @@ export default function LeadershipPage() {
           <h2 className="font-serif font-bold text-2xl text-church-navy">
             Associate Clergy & Servant Staff
           </h2>
-          <span className="text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded">
-            [CONFIRM] Roster Pending Confirmation
-          </span>
+          {/* TODO confirm: Roster pending confirmation */}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -51,7 +49,7 @@ export default function LeadershipPage() {
               <ShieldCheck className="w-8 h-8 text-slate-400" />
             </div>
             <h3 className="font-serif font-bold text-lg text-church-navy">Associate Clergy</h3>
-            <p className="text-xs text-slate-500">Official clergy roster to be updated upon confirmation. [CONFIRM]</p>
+            <p className="text-xs text-slate-500">Official clergy roster to be updated upon pastoral confirmation.</p>
           </div>
 
           <div className="bg-church-cream p-6 rounded-xl border border-slate-200 text-center space-y-2">
@@ -59,7 +57,7 @@ export default function LeadershipPage() {
               <ShieldCheck className="w-8 h-8 text-slate-400" />
             </div>
             <h3 className="font-serif font-bold text-lg text-church-navy">Deacon & Ministry Board</h3>
-            <p className="text-xs text-slate-500">Deacon and trustee board listings. [CONFIRM]</p>
+            <p className="text-xs text-slate-500">Deacon and trustee board serving the church body.</p>
           </div>
 
           <div className="bg-church-cream p-6 rounded-xl border border-slate-200 text-center space-y-2">
@@ -67,7 +65,7 @@ export default function LeadershipPage() {
               <ShieldCheck className="w-8 h-8 text-slate-400" />
             </div>
             <h3 className="font-serif font-bold text-lg text-church-navy">Church Administration</h3>
-            <p className="text-xs text-slate-500">Administrative team and office contacts. [CONFIRM]</p>
+            <p className="text-xs text-slate-500">Administrative team and office ministry staff.</p>
           </div>
         </div>
       </div>
