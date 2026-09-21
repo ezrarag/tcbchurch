@@ -1,6 +1,6 @@
 import { getFacebookEvents } from "@/lib/facebook/client";
 import { FacebookEventsFeed } from "@/components/events/FacebookEventsFeed";
-import { StarLogo } from "@/components/ui/StarLogo";
+import { ChurchLogo } from "@/components/ui/ChurchLogo";
 import { siteConfig } from "@/site.config";
 import { Radio, ExternalLink, Phone } from "lucide-react";
 
@@ -21,7 +21,7 @@ export default async function EventsPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-800 pb-8 text-left">
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <StarLogo className="w-6 h-6 text-amber-400" />
+              <ChurchLogo className="w-7 h-7" size={28} />
               <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold">
                 Facebook Synced Calendar
               </span>

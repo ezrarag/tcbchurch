@@ -1,118 +1,218 @@
 import { siteConfig } from "@/site.config";
 import Link from "next/link";
-import { Heart, ExternalLink, Smartphone, Mail, FileText, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { Heart, ExternalLink, Smartphone, Mail, FileText, ShieldCheck, Sparkles } from "lucide-react";
+import { ChurchLogo, ChurchLogoWatermark } from "@/components/ui/ChurchLogo";
+
+export const metadata = {
+  title: "Give Online & Community Stewardship | Tabernacle Community Baptist Church",
+  description: "Support the ministries and gospel work of Tabernacle Community Baptist Church through secure online giving, text-to-give, and mail.",
+};
 
 export default function GivePage() {
   const { giving } = siteConfig;
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10">
-      <div className="text-center space-y-3">
-        <div className="w-16 h-16 bg-church-gold/15 text-church-gold rounded-full flex items-center justify-center mx-auto shadow-sm">
-          <Heart className="w-8 h-8 fill-current" />
-        </div>
-        <h1 className="font-serif font-bold text-3xl sm:text-5xl text-church-navy">
-          Online & Community Giving
-        </h1>
-        <p className="text-base sm:text-lg text-slate-700 max-w-2xl mx-auto">
-          Thank you for supporting Tabernacle Community Baptist Church. Your generosity empowers worship, ministry, Christian education, and community outreach.
-        </p>
-      </div>
-
-      {/* Online Giving Action Buttons (AccessACS Links) */}
-      <div className="bg-white p-6 sm:p-8 rounded-2xl border-2 border-church-gold/40 shadow-lg space-y-6">
-        <div className="border-b border-slate-200 pb-3 flex items-center justify-between">
-          <h2 className="font-serif font-bold text-2xl text-church-navy">Give Online</h2>
-          <span className="text-xs font-bold text-church-gold flex items-center gap-1">
-            <ShieldCheck className="w-4 h-4" /> Secure via AccessACS
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <a
-            href={giving.memberUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-5 bg-church-navy hover:bg-slate-800 text-white rounded-xl shadow font-bold text-center flex flex-col items-center justify-center gap-2 group transition-colors min-h-[70px]"
-          >
-            <div className="flex items-center gap-2 text-base">
-              <span>Give Online (Members Login)</span>
-              <ExternalLink className="w-4 h-4 text-church-gold group-hover:translate-x-0.5 transition-transform" />
-            </div>
-            <span className="text-xs text-slate-300 font-normal">AccessACS Member Portal</span>
-          </a>
-
-          <a
-            href={giving.nonMemberUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-5 bg-church-gold hover:bg-church-gold-hover text-white rounded-xl shadow font-bold text-center flex flex-col items-center justify-center gap-2 group transition-colors min-h-[70px]"
-          >
-            <div className="flex items-center gap-2 text-base">
-              <span>First time or Guest? Start here</span>
-              <ExternalLink className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
-            </div>
-            <span className="text-xs text-amber-100 font-normal">AccessACS Guest Online Portal</span>
-          </a>
-        </div>
-      </div>
-
-      {/* Text-to-Give Card */}
-      <div className="bg-church-navy text-white p-6 sm:p-8 rounded-2xl shadow-md border-l-4 border-church-gold flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div className="space-y-2 text-center sm:text-left">
-          <div className="flex items-center justify-center sm:justify-start gap-2 text-church-gold font-bold text-lg">
-            <Smartphone className="w-6 h-6" />
-            <span>Text-to-Give</span>
+    <div className="w-full bg-[#221c19] text-stone-100 min-h-screen py-4 sm:py-8 px-3 sm:px-6 lg:px-10">
+      <div className="max-w-[1440px] mx-auto space-y-8 sm:space-y-12">
+        
+        {/* ============================================================
+            HERO HEADER: Conforms to Pinterest dark framed aesthetic
+            ============================================================ */}
+        <div className="rounded-2xl sm:rounded-[32px] overflow-hidden bg-[#181311] shadow-2xl border border-stone-800/60 relative min-h-[360px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-10 lg:p-12">
+          {/* Background Photography with Warm Dark Gradient */}
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <Image
+              src="/images/hero-sanctuary.jpg"
+              alt="Church sanctuary illuminated with sunlight"
+              fill
+              priority
+              className="object-cover object-center scale-[1.02]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#181311] via-transparent to-black/50" />
           </div>
-          <p className="text-xl sm:text-2xl font-serif font-bold text-white">
-            {giving.textToGive}
-          </p>
-          <p className="text-xs text-slate-300">
-            Simply send a text message to give quickly and securely from your mobile phone.
-          </p>
-        </div>
-      </div>
 
-      {/* Fund List & Mail Options */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
-          <h3 className="font-serif font-bold text-xl text-church-navy flex items-center gap-2">
-            <Heart className="w-5 h-5 text-church-gold" />
+          {/* Watermark in background */}
+          <div className="absolute top-1/2 -right-12 -translate-y-1/2 pointer-events-none opacity-15 text-stone-300">
+            <ChurchLogoWatermark size={320} />
+          </div>
+
+          {/* Top Bar Badge */}
+          <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="flex items-center gap-3">
+              <ChurchLogo className="w-8 h-8 sm:w-10 sm:h-10" size={40} />
+              <div className="flex flex-col text-left">
+                <span className="text-xs uppercase tracking-widest text-stone-300 font-light">
+                  Tabernacle Community Baptist Church
+                </span>
+                <span className="text-xs sm:text-sm font-medium text-white">
+                  Christian Stewardship & Tithes
+                </span>
+              </div>
+            </div>
+
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Secure Giving</span>
+            </span>
+          </div>
+
+          {/* Hero Editorial Headline */}
+          <div className="relative z-10 space-y-4 max-w-3xl text-left my-auto py-6">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-amber-400">
+              Honoring God with Our Resources
+            </span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light font-sans tracking-tight text-white leading-[1.1]">
+              Faithful Stewardship, <br className="hidden sm:inline" />
+              Generous Hearts
+            </h1>
+            <p className="text-stone-300 text-sm sm:text-lg font-light leading-relaxed max-w-2xl">
+              Thank you for partnering in the work of God at Tabernacle. Your tithes and free-will offerings empower Sunday worship, Christian education, senior outreach, and our community food pantry.
+            </p>
+          </div>
+
+          {/* Bottom Scripture Strip */}
+          <div className="relative z-10 pt-4 border-t border-white/10 flex flex-wrap items-center gap-6 sm:gap-12 text-xs text-stone-300">
+            <div>
+              <span className="text-amber-400 font-semibold text-sm sm:text-base mr-1.5">2 Cor 9:7</span>
+              <span className="font-light">• &ldquo;God loves a cheerful giver&rdquo;</span>
+            </div>
+            <div>
+              <span className="text-amber-400 font-semibold text-sm sm:text-base mr-1.5">AccessACS</span>
+              <span className="font-light">• Bank-grade encryption</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ============================================================
+            ONLINE GIVING ACTION PORTAL (Bento Grid)
+            ============================================================ */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+          {/* Member Portal */}
+          <div className="rounded-2xl sm:rounded-[28px] bg-[#181311] p-6 sm:p-8 border border-stone-800 flex flex-col justify-between space-y-6 hover:border-amber-500/40 transition-all">
+            <div className="space-y-3">
+              <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold block">
+                AccessACS Portal
+              </span>
+              <h2 className="text-2xl font-light text-white">
+                Member Giving Portal
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+                Log in to your church member profile to manage recurring tithes, view giving statements, and pledge to designated church funds.
+              </p>
+            </div>
+
+            <a
+              href={giving.memberUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-semibold text-xs transition-colors shadow-lg flex items-center justify-center gap-2"
+            >
+              <span>Give Online (Member Login)</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Guest / Non-Member Portal */}
+          <div className="rounded-2xl sm:rounded-[28px] bg-[#181311] p-6 sm:p-8 border border-stone-800 flex flex-col justify-between space-y-6 hover:border-amber-500/40 transition-all">
+            <div className="space-y-3">
+              <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold block">
+                Quick & Guest Giving
+              </span>
+              <h2 className="text-2xl font-light text-white">
+                Guest Online Giving
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+                First time giving or visiting online? Give quickly with credit, debit, or bank transfer without creating a member account.
+              </p>
+            </div>
+
+            <a
+              href={giving.nonMemberUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors border border-white/10 shadow-lg flex items-center justify-center gap-2"
+            >
+              <span>First-Time Guest Giving</span>
+              <ExternalLink className="w-4 h-4 text-amber-400" />
+            </a>
+          </div>
+        </div>
+
+        {/* Text-to-Give & Mail Options */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+          {/* Text-to-Give */}
+          <div className="rounded-2xl sm:rounded-[28px] bg-[#181311] p-6 sm:p-8 border border-stone-800 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+                <Smartphone className="w-5 h-5" />
+              </div>
+              <h3 className="text-xl font-light text-white">
+                Text-to-Give
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+              Send a simple text message with your gift amount to give directly from your mobile phone in seconds:
+            </p>
+            <div className="text-2xl font-mono font-light text-amber-300 bg-[#120e0d] p-4 rounded-xl border border-stone-800 text-center">
+              {giving.textToGive}
+            </div>
+          </div>
+
+          {/* Giving by Mail */}
+          <div className="rounded-2xl sm:rounded-[28px] bg-[#181311] p-6 sm:p-8 border border-stone-800 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+                <Mail className="w-5 h-5" />
+              </div>
+              <h3 className="text-xl font-light text-white">
+                Giving by Mail
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+              Checks or money orders can be made payable to <strong>Tabernacle Community Baptist Church</strong> and addressed to:
+            </p>
+            <div className="text-xs font-mono text-stone-200 bg-[#120e0d] p-4 rounded-xl border border-stone-800 leading-relaxed">
+              {giving.mailingAddress}
+            </div>
+          </div>
+        </div>
+
+        {/* Designated Funds Strip */}
+        <div className="rounded-2xl bg-[#181311] p-6 sm:p-8 border border-stone-800 space-y-4 text-left">
+          <h3 className="text-lg font-light text-white flex items-center gap-2">
+            <Heart className="w-4 h-4 text-amber-400" />
             <span>Designated Ministry Funds</span>
           </h3>
-          <ul className="space-y-2 text-sm text-slate-700">
+          <div className="flex flex-wrap gap-2.5">
             {giving.funds.map((fund, idx) => (
-              <li key={idx} className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-church-gold flex-shrink-0" />
-                <span>{fund}</span>
-              </li>
+              <span
+                key={idx}
+                className="px-3 py-1 rounded-full bg-[#120e0d] border border-stone-800 text-xs text-stone-300"
+              >
+                {fund}
+              </span>
             ))}
-          </ul>
+          </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
-          <h3 className="font-serif font-bold text-xl text-church-navy flex items-center gap-2">
-            <Mail className="w-5 h-5 text-church-gold" />
-            <span>Giving by Mail</span>
-          </h3>
-          <p className="text-sm text-slate-700 leading-relaxed">
-            Checks or money orders can be made payable to <strong>Tabernacle Community Baptist Church</strong> and mailed to:
-          </p>
-          <p className="text-xs font-mono bg-slate-50 p-3 rounded border border-slate-200 text-slate-800">
-            {giving.mailingAddress}
-          </p>
+        {/* Tax Statement Notice */}
+        <div className="rounded-2xl bg-[#120e0d] p-5 sm:p-6 border border-stone-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
+          <div className="flex items-center gap-3">
+            <FileText className="w-5 h-5 text-amber-400 flex-shrink-0" />
+            <span className="text-xs sm:text-sm text-stone-300 font-light">
+              Need a copy of your annual charitable giving tax statement?
+            </span>
+          </div>
+          <Link
+            href="/contact"
+            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs border border-white/10 transition-colors whitespace-nowrap"
+          >
+            Contact Church Office &rarr;
+          </Link>
         </div>
-      </div>
 
-      {/* Annual Statement Inquiry Line */}
-      <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-2">
-          <FileText className="w-4 h-4 text-amber-700 flex-shrink-0" />
-          <span>Need a copy of your annual tax giving statement?</span>
-        </div>
-        <Link href="/contact" className="font-bold underline hover:text-church-navy">
-          Contact Church Administrator &rarr;
-        </Link>
       </div>
     </div>
   );

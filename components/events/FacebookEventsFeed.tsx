@@ -1,9 +1,12 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, MapPin, ExternalLink, ArrowRight } from "lucide-react";
+import { Calendar, Clock, MapPin, ExternalLink, ArrowRight, Sparkles } from "lucide-react";
 import { FacebookEventItem } from "@/lib/facebook/types";
 import { siteConfig } from "@/site.config";
+import { EventRsvpModal } from "@/components/events/EventRsvpModal";
 
 interface FacebookEventsFeedProps {
   events: FacebookEventItem[];
@@ -16,6 +19,8 @@ export function FacebookEventsFeed({
   title = "Upcoming Services & Facebook Events",
   subtitle = "Synced in real-time from our Facebook page notices and church calendar.",
 }: FacebookEventsFeedProps) {
+  const [activeRsvpEvent, setActiveRsvpEvent] = useState<FacebookEventItem | null>(null);
+
   return (
     <section className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-stone-800 pb-4 text-left">
@@ -92,28 +97,48 @@ export function FacebookEventsFeed({
               </div>
             </div>
 
-            <div className="px-6 py-3.5 border-t border-stone-800/80 bg-stone-900/40 flex items-center justify-between">
-              <a
-                href={evt.permalinkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1"
+            {/* Actions: RSVP Directly on Site + Sync with Facebook */}
+            <div className="px-6 py-4 border-t border-stone-800/80 bg-stone-900/40 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveRsvpEvent(evt)}
+                className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-semibold shadow-md transition-colors flex items-center gap-1.5"
               >
-                <span>RSVP on Facebook</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>RSVP to Attend</span>
+              </button>
 
-              <Link
-                href="/plan-a-visit"
-                className="text-xs text-stone-400 hover:text-white transition-colors inline-flex items-center gap-1"
-              >
-                <span>Plan Visit</span>
-                <ArrowRight className="w-3 h-3" />
-              </Link>
+              <div className="flex items-center gap-3">
+                <a
+                  href={evt.permalinkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-stone-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1"
+                  title="View or mark Going on Facebook"
+                >
+                  <span>Facebook</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+
+                <Link
+                  href="/plan-a-visit"
+                  className="text-xs text-stone-400 hover:text-white transition-colors inline-flex items-center gap-1"
+                >
+                  <span>Visit</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Dual RSVP Modal: Website Submission to Backend + Facebook Sync */}
+      <EventRsvpModal
+        event={activeRsvpEvent}
+        isOpen={!!activeRsvpEvent}
+        onClose={() => setActiveRsvpEvent(null)}
+      />
     </section>
   );
 }

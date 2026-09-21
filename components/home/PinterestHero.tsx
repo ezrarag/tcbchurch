@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Play, Facebook, Youtube, Award, Heart } from "lucide-react";
-import { StarLogo, StarWatermark } from "@/components/ui/StarLogo";
+import { ArrowUpRight, Play, Facebook, Youtube, Award, Heart, Menu } from "lucide-react";
+import { ChurchLogo, ChurchLogoWatermark } from "@/components/ui/ChurchLogo";
 import { FacebookVideoModal } from "@/components/sermons/FacebookVideoModal";
 import { FacebookSermonVideo } from "@/lib/facebook/types";
 import { siteConfig } from "@/site.config";
@@ -45,11 +45,11 @@ export function PinterestHero({ latestSermon, nextServiceInfo }: PinterestHeroPr
             <div className="absolute inset-0 bg-gradient-to-t from-[#181311] via-transparent to-black/40" />
           </div>
 
-          {/* Top Bar: Brand Star Logo (Left) and Social Links (Right) */}
+          {/* Top Bar: Brand Church Seal (Left) and Social / Mobile Menu (Right) */}
           <header className="relative z-10 flex items-start justify-between w-full">
             {/* Brand Logo & Name */}
             <Link href="/" className="flex items-center gap-3.5 group focus:outline-none">
-              <StarLogo className="w-8 h-8 sm:w-10 sm:h-10 text-amber-100 transition-transform duration-300 group-hover:rotate-45" />
+              <ChurchLogo className="w-9 h-9 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-105" size={44} />
               <div className="flex flex-col text-left">
                 <span className="font-sans font-light tracking-wide text-xs sm:text-sm text-stone-200 uppercase leading-tight">
                   Tabernacle Community
@@ -64,21 +64,8 @@ export function PinterestHero({ latestSermon, nextServiceInfo }: PinterestHeroPr
               </div>
             </Link>
 
-            {/* Top Right Social Circle Buttons */}
+            {/* Top Right Buttons: Facebook, YouTube, Mobile Menu */}
             <div className="flex items-center gap-2.5">
-              {/* X / Twitter */}
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit our X Twitter profile"
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-stone-200 hover:text-white transition-colors border border-white/10"
-              >
-                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-
               {/* Facebook */}
               <a
                 href={siteConfig.socials.facebook || "https://www.facebook.com/tcbchurchmke"}
@@ -100,6 +87,20 @@ export function PinterestHero({ latestSermon, nextServiceInfo }: PinterestHeroPr
               >
                 <Youtube className="w-4 h-4" />
               </a>
+
+              {/* Mobile Navigation Trigger (Replaces Twitter and avoids hanging button) */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("open-mobile-menu"));
+                  }
+                }}
+                aria-label="Open mobile navigation menu"
+                className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-stone-200 hover:text-white transition-colors border border-white/10 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <Menu className="w-4 h-4" />
+              </button>
             </div>
           </header>
 
@@ -262,9 +263,9 @@ export function PinterestHero({ latestSermon, nextServiceInfo }: PinterestHeroPr
 
           {/* Bento Card 3 (Cols 9-12): White Card (Sunday Worship Service) */}
           <div className="md:col-span-4 bg-white p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden text-left min-h-[220px] sm:min-h-[260px]">
-            {/* Star Watermark in bottom right */}
+            {/* TCBC Seal Watermark in bottom right */}
             <div className="absolute -bottom-6 -right-6 pointer-events-none opacity-30 text-stone-400">
-              <StarWatermark size={140} />
+              <ChurchLogoWatermark size={140} />
             </div>
 
             {/* Card Content */}

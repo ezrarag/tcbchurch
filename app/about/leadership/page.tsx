@@ -1,71 +1,112 @@
+import Link from "next/link";
 import { siteConfig } from "@/site.config";
-import { User, ShieldCheck } from "lucide-react";
+import { User, ShieldCheck, ArrowLeft, Mail, Phone } from "lucide-react";
+import { ChurchLogo, ChurchLogoWatermark } from "@/components/ui/ChurchLogo";
+
+export const metadata = {
+  title: "Pastoral Leadership | Tabernacle Community Baptist Church",
+  description: "Meet Reverend Dr. Donna Childs and ministerial leadership at Tabernacle Community Baptist Church in Milwaukee.",
+};
 
 export default function LeadershipPage() {
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <div className="border-b border-slate-200 pb-4 text-center">
-        <span className="text-church-gold font-bold text-xs uppercase tracking-wider block">
-          Spiritual Leadership & Ministry Staff
-        </span>
-        <h1 className="font-serif font-bold text-3xl sm:text-5xl text-church-navy">
-          Pastoral Leadership
-        </h1>
-      </div>
+    <div className="w-full bg-[#221c19] text-stone-100 min-h-screen py-6 sm:py-10 px-3 sm:px-6 lg:px-10">
+      <div className="max-w-[1000px] mx-auto space-y-8 text-left">
+        <Link
+          href="/about"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to About</span>
+        </Link>
 
-      {/* Senior Pastor Feature Card */}
-      <div className="bg-white rounded-2xl p-8 border-2 border-church-gold shadow-lg flex flex-col md:flex-row gap-8 items-center">
-        <div className="w-36 h-36 md:w-48 md:h-48 rounded-full bg-church-navy text-church-gold flex flex-col items-center justify-center p-4 text-center border-4 border-church-gold flex-shrink-0 shadow-md">
-          <User className="w-12 h-12 text-church-gold mb-1" />
-          <span className="font-serif font-bold text-sm text-white">{siteConfig.pastorTitle}</span>
-          <span className="font-serif font-semibold text-xs text-slate-300">{siteConfig.pastorName}</span>
-        </div>
-
-        <div className="space-y-4 text-slate-800 text-left flex-1">
-          <div>
-            <span className="text-xs font-bold text-church-gold uppercase tracking-wider">Senior Pastor</span>
-            <h2 className="font-serif font-bold text-2xl sm:text-3xl text-church-navy">
-              {siteConfig.pastorTitle} {siteConfig.pastorName}
-            </h2>
-          </div>
-          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-            Reverend Dr. Donna Childs serves as Senior Pastor of Tabernacle Community Baptist Church. Under Pastor Childs&apos; visionary spiritual leadership, TCBC continues its mission of empowering believers, teaching biblical truth, and extending Christ-centered healing throughout Milwaukee.
-          </p>
-        </div>
-      </div>
-
-      {/* Associate Clergy & Servant Staff Placeholders */}
-      <div className="space-y-6">
-        <div className="border-b border-slate-200 pb-2 flex items-center justify-between">
-          <h2 className="font-serif font-bold text-2xl text-church-navy">
-            Associate Clergy & Servant Staff
-          </h2>
-          {/* TODO confirm: Roster pending confirmation */}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="bg-church-cream p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <div className="w-16 h-16 rounded-full bg-slate-200 text-slate-500 mx-auto flex items-center justify-center font-bold">
-              <ShieldCheck className="w-8 h-8 text-slate-400" />
-            </div>
-            <h3 className="font-serif font-bold text-lg text-church-navy">Associate Clergy</h3>
-            <p className="text-xs text-slate-500">Official clergy roster to be updated upon pastoral confirmation.</p>
+        {/* Senior Pastor Showcase Card */}
+        <div className="relative rounded-2xl sm:rounded-[32px] overflow-hidden bg-[#181311] border border-stone-800/80 p-6 sm:p-10 lg:p-12 shadow-2xl space-y-8">
+          <div className="absolute top-8 right-8 pointer-events-none opacity-10 text-stone-300">
+            <ChurchLogoWatermark size={240} />
           </div>
 
-          <div className="bg-church-cream p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <div className="w-16 h-16 rounded-full bg-slate-200 text-slate-500 mx-auto flex items-center justify-center font-bold">
-              <ShieldCheck className="w-8 h-8 text-slate-400" />
-            </div>
-            <h3 className="font-serif font-bold text-lg text-church-navy">Deacon & Ministry Board</h3>
-            <p className="text-xs text-slate-500">Deacon and trustee board serving the church body.</p>
+          <div className="relative z-10 border-b border-stone-800 pb-6 space-y-2">
+            <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold block">
+              Spiritual Shepherding & Pulpit Ministry
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-light font-sans text-white tracking-tight leading-tight">
+              Pastoral Leadership
+            </h1>
           </div>
 
-          <div className="bg-church-cream p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <div className="w-16 h-16 rounded-full bg-slate-200 text-slate-500 mx-auto flex items-center justify-center font-bold">
-              <ShieldCheck className="w-8 h-8 text-slate-400" />
+          {/* Pastor Feature Bento */}
+          <div className="relative z-10 rounded-2xl bg-[#120e0d] p-6 sm:p-8 border border-stone-800 flex flex-col md:flex-row gap-8 items-center">
+            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-amber-500/20 to-stone-900 border-2 border-amber-400/60 flex flex-col items-center justify-center p-4 text-center flex-shrink-0 shadow-xl">
+              <User className="w-12 h-12 text-amber-400 mb-1" />
+              <span className="font-sans font-medium text-xs text-white leading-tight">{siteConfig.pastorTitle}</span>
+              <span className="font-sans font-light text-[11px] text-stone-300">{siteConfig.pastorName}</span>
             </div>
-            <h3 className="font-serif font-bold text-lg text-church-navy">Church Administration</h3>
-            <p className="text-xs text-slate-500">Administrative team and office ministry staff.</p>
+
+            <div className="space-y-3 flex-1 text-left">
+              <span className="text-xs font-semibold text-amber-400 uppercase tracking-wider block">
+                Senior Pastor
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-light text-white leading-snug">
+                {siteConfig.pastorTitle} {siteConfig.pastorName}
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+                Reverend Dr. Donna Childs serves as Senior Pastor of Tabernacle Community Baptist Church. Under Pastor Childs&apos; faithful spiritual leadership, TCBC continues its century-long mission of empowering believers, teaching biblical truth, and extending Christ-centered healing throughout Milwaukee.
+              </p>
+            </div>
+          </div>
+
+          {/* Ministry Servant Boards */}
+          <div className="relative z-10 space-y-6 pt-4">
+            <div className="border-b border-stone-800 pb-2">
+              <h2 className="text-xl sm:text-2xl font-light text-white">
+                Ministerial Staff & Servant Boards
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="bg-[#120e0d] p-6 rounded-2xl border border-stone-800 space-y-2">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-light text-white">Associate Clergy</h3>
+                <p className="text-xs text-stone-400 font-light leading-relaxed">
+                  Ministerial associates supporting Sunday worship, pastoral care, and pulpit preaching.
+                </p>
+              </div>
+
+              <div className="bg-[#120e0d] p-6 rounded-2xl border border-stone-800 space-y-2">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-light text-white">Deacons & Trustees</h3>
+                <p className="text-xs text-stone-400 font-light leading-relaxed">
+                  Serving the congregation in communion, benevolence, and physical church stewardship.
+                </p>
+              </div>
+
+              <div className="bg-[#120e0d] p-6 rounded-2xl border border-stone-800 space-y-2">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-light text-white">Ministry Auxiliaries</h3>
+                <p className="text-xs text-stone-400 font-light leading-relaxed">
+                  Leaders of our ~30 active auxiliaries, youth programs, and community outreach efforts.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative z-10 pt-4 border-t border-stone-800 flex items-center justify-between">
+            <span className="text-xs text-stone-400">
+              Questions or ministerial appointments?
+            </span>
+            <Link
+              href="/contact"
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-semibold text-xs transition-colors"
+            >
+              Contact Office
+            </Link>
           </div>
         </div>
       </div>

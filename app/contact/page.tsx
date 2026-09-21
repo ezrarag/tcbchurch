@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { siteConfig } from "@/site.config";
-import { MapPin, Phone, Mail, Send, Check, AlertCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Send, Check, AlertCircle, Sparkles, Clock } from "lucide-react";
+import { ChurchLogo, ChurchLogoWatermark } from "@/components/ui/ChurchLogo";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -32,7 +34,7 @@ export default function ContactPage() {
 
       if (res.ok) {
         setStatus("success");
-        setStatusMsg("Your message has been sent to the church office. We will be in touch soon!");
+        setStatusMsg("Your message has been received by the church office. God bless you!");
         setName("");
         setEmail("");
         setPhone("");
@@ -42,126 +44,236 @@ export default function ContactPage() {
       }
     } catch {
       setStatus("error");
-      setStatusMsg("Could not send message. Please call us directly at " + siteConfig.phone);
+      setStatusMsg("Could not send message. Please call our church office directly at " + siteConfig.phone);
     }
   };
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
-      <div className="text-center space-y-3">
-        <span className="text-church-gold font-bold text-xs uppercase tracking-wider block">
-          Get in Touch
-        </span>
-        <h1 className="font-serif font-bold text-3xl sm:text-5xl text-church-navy">
-          Contact Church Office
-        </h1>
-        <p className="text-base sm:text-lg text-slate-700 max-w-2xl mx-auto">
-          Have questions about services, membership, member records, or facility scheduling? Send us a message or reach out by phone.
-        </p>
-      </div>
+    <div className="w-full bg-[#221c19] text-stone-100 min-h-screen py-4 sm:py-8 px-3 sm:px-6 lg:px-10">
+      <div className="max-w-[1440px] mx-auto space-y-8 sm:space-y-12">
+        
+        {/* ============================================================
+            HERO HEADER: Conforms to Pinterest dark framed aesthetic
+            ============================================================ */}
+        <div className="rounded-2xl sm:rounded-[32px] overflow-hidden bg-[#181311] shadow-2xl border border-stone-800/60 relative min-h-[340px] sm:min-h-[400px] flex flex-col justify-between p-6 sm:p-10 lg:p-12">
+          {/* Background Photography with Warm Dark Gradient */}
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <Image
+              src="/images/hero-sanctuary.jpg"
+              alt="Church sanctuary"
+              fill
+              priority
+              className="object-cover object-center scale-[1.02]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#181311] via-transparent to-black/50" />
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-        <div className="md:col-span-5 space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-            <h2 className="font-serif font-bold text-xl text-church-navy border-b pb-2">
-              Church Address & Phone
-            </h2>
-            <ul className="space-y-3 text-sm text-slate-700">
-              <li>
-                <a href={siteConfig.address.mapUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-2.5 hover:text-church-gold">
-                  <MapPin className="w-5 h-5 text-church-gold flex-shrink-0 mt-0.5" />
-                  <span>{siteConfig.address.formatted}</span>
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${siteConfig.phoneRaw}`} className="flex items-center gap-2.5 hover:text-church-gold">
-                  <Phone className="w-5 h-5 text-church-gold flex-shrink-0" />
-                  <span>{siteConfig.phone}</span>
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2.5 hover:text-church-gold">
-                  <Mail className="w-5 h-5 text-church-gold flex-shrink-0" />
-                  <span>{siteConfig.email}</span>
-                </a>
-              </li>
-            </ul>
+          {/* Watermark in background */}
+          <div className="absolute top-1/2 -right-12 -translate-y-1/2 pointer-events-none opacity-15 text-stone-300">
+            <ChurchLogoWatermark size={320} />
+          </div>
+
+          {/* Top Bar Badge */}
+          <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="flex items-center gap-3">
+              <ChurchLogo className="w-8 h-8 sm:w-10 sm:h-10" size={40} />
+              <div className="flex flex-col text-left">
+                <span className="text-xs uppercase tracking-widest text-stone-300 font-light">
+                  Tabernacle Community Baptist Church
+                </span>
+                <span className="text-xs sm:text-sm font-medium text-white">
+                  Church Office & Ministry Inquiries
+                </span>
+              </div>
+            </div>
+
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>We&apos;re Here to Help</span>
+            </span>
+          </div>
+
+          {/* Hero Editorial Headline */}
+          <div className="relative z-10 space-y-4 max-w-3xl text-left my-auto py-6">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-amber-400">
+              Get In Touch
+            </span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light font-sans tracking-tight text-white leading-[1.1]">
+              Connect with Our <br className="hidden sm:inline" />
+              Church Family
+            </h1>
+            <p className="text-stone-300 text-sm sm:text-lg font-light leading-relaxed max-w-2xl">
+              Have questions regarding Sunday worship, pastoral counseling, member records, or auxiliary participation? Reach out to our pastoral team.
+            </p>
           </div>
         </div>
 
-        <div className="md:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-md">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Your Name *</label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Full Name"
-                className="w-full p-3 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-church-gold focus:outline-none"
-              />
+        {/* ============================================================
+            CONTACT INFO & MESSAGE FORM (Bento Grid)
+            ============================================================ */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-left">
+          {/* Left Info Column */}
+          <div className="md:col-span-5 space-y-6">
+            <div className="rounded-2xl sm:rounded-[28px] bg-[#181311] p-6 sm:p-8 border border-stone-800 space-y-6">
+              <div className="border-b border-stone-800 pb-3">
+                <span className="text-[11px] uppercase tracking-widest text-amber-400 font-semibold block">
+                  Location & Contact
+                </span>
+                <h2 className="text-2xl font-light text-white font-sans tracking-tight">
+                  Church Office
+                </h2>
+              </div>
+
+              <ul className="space-y-4 text-xs sm:text-sm text-stone-300 font-light">
+                <li>
+                  <a
+                    href={siteConfig.address.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-3 hover:text-amber-400 transition-colors"
+                  >
+                    <MapPin className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-white font-medium block">Sanctuary & Office</span>
+                      <span>{siteConfig.address.formatted}</span>
+                    </div>
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    href={`tel:${siteConfig.phoneRaw}`}
+                    className="flex items-center gap-3 hover:text-amber-400 transition-colors"
+                  >
+                    <Phone className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                    <div>
+                      <span className="text-white font-medium block">Office Telephone</span>
+                      <span>{siteConfig.phone}</span>
+                    </div>
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="flex items-center gap-3 hover:text-amber-400 transition-colors"
+                  >
+                    <Mail className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                    <div>
+                      <span className="text-white font-medium block">Email Us</span>
+                      <span>{siteConfig.email}</span>
+                    </div>
+                  </a>
+                </li>
+
+                <li>
+                  <div className="flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-white font-medium block">Sunday Worship</span>
+                      <span>10:00 AM CST</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Right Form Column */}
+          <div className="md:col-span-7 rounded-2xl sm:rounded-[28px] bg-[#181311] p-6 sm:p-8 border border-stone-800 space-y-6">
+            <div className="border-b border-stone-800 pb-3">
+              <span className="text-[11px] uppercase tracking-widest text-amber-400 font-semibold block">
+                Send a Message
+              </span>
+              <h2 className="text-2xl font-light text-white font-sans tracking-tight">
+                How Can We Serve You?
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+                <label className="block text-xs uppercase tracking-wider text-stone-300 font-medium mb-1.5">
+                  Your Full Name *
+                </label>
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="email@example.com"
-                  className="w-full p-3 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-church-gold focus:outline-none"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Sister Joyce Miller"
+                  className="w-full px-4 py-3 bg-[#120e0d] border border-stone-800 rounded-xl text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors"
                 />
               </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-stone-300 font-medium mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    className="w-full px-4 py-3 bg-[#120e0d] border border-stone-800 rounded-xl text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-stone-300 font-medium mb-1.5">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="(414) 000-0000"
+                    className="w-full px-4 py-3 bg-[#120e0d] border border-stone-800 rounded-xl text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors"
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="(414) 000-0000"
-                  className="w-full p-3 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-church-gold focus:outline-none"
+                <label className="block text-xs uppercase tracking-wider text-stone-300 font-medium mb-1.5">
+                  Message / Question *
+                </label>
+                <textarea
+                  required
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Tell us how we can pray for you or assist you..."
+                  className="w-full px-4 py-3 bg-[#120e0d] border border-stone-800 rounded-xl text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors"
                 />
               </div>
-            </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Message / Inquiry *</label>
-              <textarea
-                required
-                rows={4}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="How can we assist you?"
-                className="w-full p-3 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-church-gold focus:outline-none"
-              />
-            </div>
+              {status === "success" && (
+                <div className="p-4 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-medium flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <span>{statusMsg}</span>
+                </div>
+              )}
 
-            {status === "success" && (
-              <div className="p-3 bg-emerald-50 text-emerald-800 rounded-lg text-xs font-semibold flex items-center gap-2 border border-emerald-300">
-                <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>{statusMsg}</span>
-              </div>
-            )}
+              {status === "error" && (
+                <div className="p-4 bg-red-950/60 border border-red-500/40 text-red-300 rounded-xl text-xs font-medium flex items-center gap-2.5">
+                  <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                  <span>{statusMsg}</span>
+                </div>
+              )}
 
-            {status === "error" && (
-              <div className="p-3 bg-red-50 text-red-800 rounded-lg text-xs font-semibold flex items-center gap-2 border border-red-300">
-                <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-                <span>{statusMsg}</span>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={status === "submitting"}
-              className="w-full py-3.5 bg-church-navy hover:bg-slate-800 text-white font-bold rounded-lg shadow transition-colors flex items-center justify-center gap-2 min-h-[44px]"
-            >
-              <Send className="w-4 h-4 text-church-gold" />
-              <span>{status === "submitting" ? "Sending..." : "Send Message"}</span>
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-stone-950 font-semibold text-xs transition-colors shadow-lg flex items-center justify-center gap-2"
+              >
+                <Send className="w-4 h-4" />
+                <span>{status === "submitting" ? "Sending..." : "Submit Message"}</span>
+              </button>
+            </form>
+          </div>
         </div>
+
       </div>
     </div>
   );

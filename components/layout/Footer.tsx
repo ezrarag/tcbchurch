@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/site.config";
 import { MapPin, Phone, Video, Clock, Heart, Award } from "lucide-react";
-import { StarLogo } from "@/components/ui/StarLogo";
+import { ChurchLogo } from "@/components/ui/ChurchLogo";
 
 export function Footer() {
   return (
@@ -10,7 +10,7 @@ export function Footer() {
         {/* Column 1: Church Identity & Centennial */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <StarLogo className="w-8 h-8 text-amber-300" />
+            <ChurchLogo className="w-9 h-9" size={36} />
             <div>
               <span className="font-sans font-medium text-lg text-white block">
                 {siteConfig.name}
