@@ -57,7 +57,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdChurch) }}
         />
       </head>
-      <body className="antialiased bg-church-cream text-church-text min-h-screen flex flex-col">
+      <body className="antialiased bg-[#221c19] text-stone-100 min-h-screen flex flex-col">
         {/* Skip to Main Content Link for Accessibility */}
         <a href="#main-content" className="skip-to-content">
           Skip to main content

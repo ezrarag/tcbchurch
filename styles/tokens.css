@@ -9,7 +9,13 @@
   --color-surface: #FFFFFF;
   --color-text-main: #1E293B;
   --color-text-muted: #475569;
-  --color-border: #E2E8F0;
+  --color-dark-bg: #221c19;
+  --color-dark-surface: #2d2622;
+  --color-card-dark: #120e0d;
+  --color-card-dark-muted: #1c1715;
+  --color-cream-soft: #fbf9f5;
+  --color-cream-card: #f3efe8;
+  --color-starburst: #d8c7b5;
 
   /* Typography Scale — Base Body 18px+ for high legibility */
   --font-base-size: 1.125rem; /* 18px */

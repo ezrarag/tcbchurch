@@ -19,8 +19,14 @@ const config: Config = {
           cream: "#FAF8F5", // Warm cream page background
           surface: "#FFFFFF",
           text: "#1E293B",
-          muted: "#475569",
           border: "#E2E8F0",
+          darkBg: "#221c19", // Deep espresso charcoal background
+          darkSurface: "#2d2622",
+          cardDark: "#120e0d",
+          cardDarkMuted: "#1c1715",
+          creamSoft: "#fbf9f5",
+          creamCard: "#f3efe8",
+          starburst: "#d8c7b5",
         },
       },
       fontFamily: {
