@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import html2canvas from "html2canvas";
-import { MessageSquare, X, Check, Camera, List, AlertCircle, Sparkles } from "lucide-react";
+import { MessageSquare, X, Check, Camera, List, AlertCircle, Sparkles, ShieldCheck } from "lucide-react";
 import { generateCssSelector, getConsoleErrors } from "./devModeUtils";
 
 interface PickedElementData {
@@ -10,6 +10,10 @@ interface PickedElementData {
   elementText: string;
   boundingRect: { top: number; left: number; width: number; height: number };
   routePath: string;
+}
+
+interface DevModeOverlayProps {
+  currentUser?: { name: string; email: string } | null;
 }
 
 const CATEGORIES = [
@@ -28,7 +32,7 @@ const URGENCIES = [
   { id: "urgent", label: "Urgent" },
 ];
 
-export function DevModeOverlay() {
+export function DevModeOverlay({ currentUser }: DevModeOverlayProps) {
   const [isPicking, setIsPicking] = useState(false);
   const [hoveredRect, setHoveredRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
   const [hoveredTag, setHoveredTag] = useState<string>("");
@@ -36,12 +40,12 @@ export function DevModeOverlay() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Form State
+  // Form State — auto-prefill from currentUser if logged in
   const [category, setCategory] = useState("wording");
   const [note, setNote] = useState("");
   const [urgency, setUrgency] = useState("soon");
-  const [clientName, setClientName] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
+  const [clientName, setClientName] = useState(currentUser?.name || "");
+  const [clientEmail, setClientEmail] = useState(currentUser?.email || "");
   const [attachScreenshot, setAttachScreenshot] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -51,7 +55,20 @@ export function DevModeOverlay() {
   const [myFeedbackList, setMyFeedbackList] = useState<unknown[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
-  const activeElementRef = useRef<HTMLElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Update name/email if currentUser changes
+  useEffect(() => {
+    if (currentUser?.name && !clientName) setClientName(currentUser.name);
+    if (currentUser?.email && !clientEmail) setClientEmail(currentUser.email);
+  }, [currentUser, clientName, clientEmail]);
+
+  // Focus textarea when panel opens
+  useEffect(() => {
+    if (panelOpen) {
+      setTimeout(() => textareaRef.current?.focus(), 100);
+    }
+  }, [panelOpen]);
 
   // Keyboard Escape listener
   useEffect(() => {
@@ -59,19 +76,19 @@ export function DevModeOverlay() {
       if (e.key === "Escape") {
         setIsPicking(false);
         setHoveredRect(null);
+        setPanelOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Handle element selection during PICK MODE
+  // Handle element selection during PICK MODE (Mouse & Touch)
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isPicking) return;
     const target = e.target as HTMLElement;
     if (!target || target.closest("#rag-dev-mode-ui")) return;
 
-    activeElementRef.current = target;
     const rect = target.getBoundingClientRect();
     setHoveredRect({
       top: rect.top + window.scrollY,
@@ -82,13 +99,8 @@ export function DevModeOverlay() {
     setHoveredTag(target.tagName.toLowerCase());
   }, [isPicking]);
 
-  const handleClick = useCallback((e: MouseEvent) => {
-    if (!isPicking) return;
-    const target = e.target as HTMLElement;
+  const selectElement = useCallback((target: HTMLElement) => {
     if (!target || target.closest("#rag-dev-mode-ui")) return;
-
-    e.preventDefault();
-    e.stopPropagation();
 
     const selector = generateCssSelector(target);
     const textSnippet = (target.textContent || "").trim().slice(0, 200);
@@ -109,23 +121,47 @@ export function DevModeOverlay() {
     setIsPicking(false);
     setHoveredRect(null);
     setPanelOpen(true);
-  }, [isPicking]);
+  }, []);
+
+  const handleClick = useCallback((e: MouseEvent) => {
+    if (!isPicking) return;
+    const target = e.target as HTMLElement;
+    if (!target || target.closest("#rag-dev-mode-ui")) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    selectElement(target);
+  }, [isPicking, selectElement]);
+
+  const handleTouchEnd = useCallback((e: TouchEvent) => {
+    if (!isPicking) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    const target = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement;
+    if (target && !target.closest("#rag-dev-mode-ui")) {
+      e.preventDefault();
+      selectElement(target);
+    }
+  }, [isPicking, selectElement]);
 
   useEffect(() => {
     if (isPicking) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("click", handleClick, true);
+      document.addEventListener("touchend", handleTouchEnd, true);
     } else {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("click", handleClick, true);
+      document.removeEventListener("touchend", handleTouchEnd, true);
     }
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("click", handleClick, true);
+      document.removeEventListener("touchend", handleTouchEnd, true);
     };
-  }, [isPicking, handleMouseMove, handleClick]);
+  }, [isPicking, handleMouseMove, handleClick, handleTouchEnd]);
 
-  // Submit Feedback Form
+  // Submit Feedback Form with optimized html2canvas screenshot capture
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!note.trim()) return;
@@ -143,7 +179,13 @@ export function DevModeOverlay() {
       try {
         const uiElement = document.getElementById("rag-dev-mode-ui");
         if (uiElement) uiElement.style.display = "none";
-        const canvas = await html2canvas(document.body, { logging: false, useCORS: true });
+        const canvas = await html2canvas(document.body, {
+          logging: false,
+          useCORS: true,
+          scale: 1,
+          windowWidth: window.innerWidth,
+          windowHeight: window.innerHeight,
+        });
         if (uiElement) uiElement.style.display = "block";
         screenshotBase64 = canvas.toDataURL("image/jpeg", 0.7);
       } catch (err) {
@@ -154,8 +196,8 @@ export function DevModeOverlay() {
     const payload = {
       source: "dev-mode",
       projectId,
-      clientEmail: clientEmail || "anonymous@church.org",
-      clientName: clientName || "Church Contributor",
+      clientEmail: clientEmail || currentUser?.email || "anonymous@church.org",
+      clientName: clientName || currentUser?.name || "Church Admin",
       rawText: note,
       category,
       urgency,
@@ -185,7 +227,7 @@ export function DevModeOverlay() {
         setSubmitMessage("Thank you — we've got it. You'll see it in Your requests.");
         setNote("");
         setPickedData(null);
-        setTimeout(() => setPanelOpen(false), 2000);
+        setTimeout(() => setPanelOpen(false), 2500);
       } else {
         throw new Error(`Server returned ${res.status}`);
       }
@@ -213,7 +255,7 @@ export function DevModeOverlay() {
     const ragUrl = process.env.NEXT_PUBLIC_RAG_FEEDBACK_URL || "http://localhost:3000";
     const projectId = process.env.NEXT_PUBLIC_RAG_PROJECT_ID || "tcb-church";
     const projectKey = process.env.NEXT_PUBLIC_RAG_PROJECT_KEY || "rag_live_tcbchurch_demo_key_2026";
-    const submitter = clientEmail || "anonymous@church.org";
+    const submitter = clientEmail || currentUser?.email || "anonymous@church.org";
 
     try {
       const res = await fetch(`${ragUrl}/api/feedback?projectId=${encodeURIComponent(projectId)}&submitter=${encodeURIComponent(submitter)}`, {
@@ -236,7 +278,9 @@ export function DevModeOverlay() {
       <div className="fixed top-0 left-0 right-0 bg-amber-500 text-slate-950 px-4 py-1.5 text-xs font-bold flex items-center justify-between z-50 shadow-md">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-slate-950" />
-          <span>Preview mode — changes go directly to the ReadyAimGo team</span>
+          <span>
+            {currentUser ? `Admin Feedback Mode (${currentUser.name})` : "Preview mode — changes go directly to ReadyAimGo"}
+          </span>
         </div>
         <a href="?dev=off" className="underline hover:text-slate-800">
           Turn Off Preview Mode
@@ -252,10 +296,10 @@ export function DevModeOverlay() {
             width: `${hoveredRect.width}px`,
             height: `${hoveredRect.height}px`,
           }}
-          className="absolute border-2 border-amber-500 bg-amber-500/10 pointer-events-none z-50 transition-all rounded"
+          className="absolute border-2 border-amber-500 bg-amber-500/15 pointer-events-none z-50 transition-all rounded shadow-lg"
         >
-          <span className="absolute -top-6 left-0 bg-amber-500 text-slate-950 text-[10px] font-bold px-1.5 py-0.5 rounded">
-            &lt;{hoveredTag}&gt; — Click to pick
+          <span className="absolute -top-6 left-0 bg-amber-500 text-slate-950 text-[10px] font-bold px-2 py-0.5 rounded shadow">
+            &lt;{hoveredTag}&gt; — Click or Tap to pick
           </span>
         </div>
       )}
@@ -264,7 +308,7 @@ export function DevModeOverlay() {
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
         <button
           onClick={fetchMyRequests}
-          className="bg-slate-900 text-white hover:bg-slate-800 border border-slate-700 shadow-xl rounded-full px-3 py-2 text-xs font-semibold flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-500 min-h-[44px]"
+          className="bg-slate-900 text-white hover:bg-slate-800 border border-slate-700 shadow-xl rounded-full px-3.5 py-2 text-xs font-semibold flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-500 min-h-[44px]"
         >
           <List className="w-4 h-4 text-amber-400" />
           <span>Your requests</span>
@@ -276,21 +320,28 @@ export function DevModeOverlay() {
             setPanelOpen(false);
           }}
           className={`min-h-[44px] px-4 py-3 rounded-full font-bold shadow-2xl text-sm flex items-center gap-2 transition-transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400 ${
-            isPicking ? "bg-amber-500 text-slate-950 animate-pulse" : "bg-church-navy text-white hover:bg-slate-800 border-2 border-amber-400"
+            isPicking ? "bg-amber-500 text-slate-950 animate-pulse" : "bg-church-maroon text-white hover:bg-rose-900 border-2 border-amber-400"
           }`}
           aria-label="Suggest a change on this page"
         >
           <MessageSquare className="w-5 h-5 text-amber-400 fill-current" />
-          <span>{isPicking ? "Click any element..." : "Suggest a change"}</span>
+          <span>{isPicking ? "Tap any element..." : "Suggest a change"}</span>
         </button>
       </div>
 
       {/* Suggestion Form Panel */}
       {panelOpen && (
         <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border-2 border-amber-400">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border-2 border-amber-400" role="dialog" aria-modal="true" aria-labelledby="dev-mode-panel-title">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="font-serif font-bold text-xl text-church-navy">Suggest a Change</h3>
+              <div className="flex items-center gap-2">
+                <h3 id="dev-mode-panel-title" className="font-serif font-bold text-xl text-church-maroon">Suggest a Change</h3>
+                {currentUser && (
+                  <span className="bg-amber-100 text-amber-900 text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3" /> Admin Signed-In
+                  </span>
+                )}
+              </div>
               <button onClick={() => setPanelOpen(false)} className="p-1 rounded text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -313,7 +364,7 @@ export function DevModeOverlay() {
                       type="button"
                       onClick={() => setCategory(cat.id)}
                       className={`px-2.5 py-1 text-xs rounded-full border font-medium transition-colors ${
-                        category === cat.id ? "bg-church-navy text-white border-church-navy" : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
+                        category === cat.id ? "bg-church-maroon text-white border-church-maroon" : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
                       }`}
                     >
                       {cat.label}
@@ -325,6 +376,7 @@ export function DevModeOverlay() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Your suggestion or note *</label>
                 <textarea
+                  ref={textareaRef}
                   required
                   maxLength={1500}
                   rows={4}
@@ -391,11 +443,22 @@ export function DevModeOverlay() {
               </div>
 
               {submitStatus !== "idle" && (
-                <div className={`p-3 rounded-lg text-xs font-semibold flex items-center gap-2 ${
+                <div aria-live="polite" className={`p-3 rounded-lg text-xs font-semibold flex items-center justify-between gap-2 ${
                   submitStatus === "success" ? "bg-emerald-50 text-emerald-800 border border-emerald-300" : "bg-red-50 text-red-800 border border-red-300"
                 }`}>
-                  {submitStatus === "success" ? <Check className="w-4 h-4 text-emerald-600" /> : <AlertCircle className="w-4 h-4 text-red-600" />}
-                  <span>{submitMessage}</span>
+                  <div className="flex items-center gap-2">
+                    {submitStatus === "success" ? <Check className="w-4 h-4 text-emerald-600" /> : <AlertCircle className="w-4 h-4 text-red-600" />}
+                    <span>{submitMessage}</span>
+                  </div>
+                  {submitStatus === "success" && (
+                    <button
+                      type="button"
+                      onClick={fetchMyRequests}
+                      className="text-xs font-bold underline hover:text-emerald-950 flex-shrink-0"
+                    >
+                      View Requests
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -410,7 +473,7 @@ export function DevModeOverlay() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2.5 bg-church-navy hover:bg-slate-800 text-white font-bold text-xs rounded-lg shadow min-h-[44px]"
+                  className="px-5 py-2.5 bg-church-maroon hover:bg-rose-900 text-white font-bold text-xs rounded-lg shadow min-h-[44px]"
                 >
                   {isSubmitting ? "Sending..." : "Submit Suggestion"}
                 </button>
@@ -423,10 +486,10 @@ export function DevModeOverlay() {
       {/* Your Requests Drawer */}
       {drawerOpen && (
         <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex justify-end">
-          <div className="bg-white max-w-md w-full h-full p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
+          <div className="bg-white max-w-md w-full h-full p-6 shadow-2xl flex flex-col justify-between overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="your-requests-title">
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b pb-3">
-                <h3 className="font-serif font-bold text-xl text-church-navy">Your Requests</h3>
+                <h3 id="your-requests-title" className="font-serif font-bold text-xl text-church-maroon">Your Requests</h3>
                 <button onClick={() => setDrawerOpen(false)} className="p-1 rounded text-slate-400 hover:text-slate-600">
                   <X className="w-5 h-5" />
                 </button>
